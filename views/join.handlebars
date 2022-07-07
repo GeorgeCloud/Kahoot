@@ -2,9 +2,9 @@
 
 
 <div class="d-flex justify-content-center align-items-center">
-  <form class="w-50" action="">
+  <form class="w-50" action="/join" method="get">
     <label class="form-label">Room ID</label>
-    <input class="form-control" type="number" placeholder="12345">
+    <input class="form-control" type="text" name="roomId" placeholder="1U3X5">
 
     <label class="form-label">Username</label>
     <input class="form-control" type="text" placeholder="Bob">
@@ -12,3 +12,15 @@
     <button type="submit" class="btn btn-primary my-3">Join Game</button>
   </form>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+  var form = document.getElementById('roomForm');
+  var roomId = document.getElementById('roomId');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    socket.emit('join-room', roomId.value);
+  });
+</script>
