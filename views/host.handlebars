@@ -7,7 +7,7 @@
 
 {{!-- create questions & answers --}}
 <div class="d-flex justify-content-center align-items-center">
-  <form id="roomForm" class="w-50" action="/host" method="post">
+  <form id="roomForm" class="w-50" action="/room/{{roomId}}/admin" method="post">
     <input id="roomId" type="hidden" name="roomId" value="{{roomId}}">
 
     <label class="form-label">What color is the sky?</label>

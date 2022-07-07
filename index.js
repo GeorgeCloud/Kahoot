@@ -15,6 +15,11 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main', handlebars: allo
 app.set('view engine', 'handlebars');
 app.set("views", "./views");
 
+questions = {
+  'question': [],
+  'question': []
+}
+
 users = []
 
 rooms = {
@@ -42,12 +47,11 @@ app.get('/host', (req, res) => {
   res.render('host', { roomId });
 });
 
-app.post('/host', (req, res) => {
-  // Create io server
-  const roomId = req.body.roomId;
-
-  res.redirect(`/room/${roomId}`);
-});
+// app.post('/host', (req, res) => {
+//   const roomId = req.body.roomId;
+//
+//   res.redirect(`/room/${roomId}/admin`);
+// });
 
 app.get('/join', (req, res) => {
   res.render('join');
@@ -62,12 +66,27 @@ app.post('/join', (req, res) => {
 app.get('/room/:roomId', (req, res) => {
   // If room does NOT have host don't render page
   const roomId = req.params.roomId
+
   if (rooms[roomId]){
     res.render('game', { roomId });
+    // ensure client side is connected to correct room
   } else {
     res.send(`room ${roomId} does not exist`)
   }
 });
+
+app.post('/room/:roomId/admin', (req, res) => {
+  // If room does NOT have host don't render page
+  const roomId = req.params.roomId
+  const ownerId = rooms[roomId];
+
+  if (rooms[roomId]){
+    res.render('admin', { ownerId });
+  } else {
+    res.send(`room ${roomId} does not exist`)
+  }
+});
+
 
 ///////  SOCKET ROUTES  ///////
 io.on('connection', (socket) => {
@@ -95,6 +114,7 @@ io.on('connection', (socket) => {
     const roomId   = data['roomId'];
     const username = data['username'];
 
+    // Check if room exists before creating user
     if (roomId in rooms){
       const currentId = socket.id
 
@@ -105,10 +125,21 @@ io.on('connection', (socket) => {
 
       console.log(`${username} joined room: ${roomId}`)
 
+      console.log('all rooms', rooms)
+      console.log('all users:', users)
     } else {
       console.log('room does not exist | socket side')
     }
   });
+
+  socket.on("start game", (msg) => {
+
+  });
+
+  socket.on("chat message", (msg) => {
+    io.emit('chat message', msg);
+  });
+
 });
 
 
