@@ -22,6 +22,18 @@ app.get('/', (req, res) => {
 io.engine.generateId = (req) => {
   return uuid.v4(); // must be unique across all Socket.IO servers
 }
+app.get('/host', (req, res) => {
+  res.render('host');
+});
+
+app.get('/join', (req, res) => {
+  res.render('join');
+});
+
+io.on('connection', (socket) => {
+  // console.log(socket.id)
+  io.emit('display message', 'a user connected');
+  console.log('a user connected');
 
 // User connected
 io.on('connection', (socket) => {
