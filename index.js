@@ -1,16 +1,21 @@
 const express        = require('express');
+const Handlebars     = require('handlebars')
+const exphbs         = require('express-handlebars');
 const app            = express();
 const http           = require('http');
 const server         = http.createServer(app);
 const { Server }     = require("socket.io");
 const io             = new Server(server);
 const bodyParser     = require('body-parser');
-
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }));
+app.set('view engine', 'handlebars');
+app.set("views", "./views");
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.render('index');
 });
 
 io.on('connection', (socket) => {
