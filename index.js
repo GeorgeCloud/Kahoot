@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
 io.engine.generateId = (req) => {
   return uuid.v4(); // must be unique across all Socket.IO servers
 }
+
 app.get('/host', (req, res) => {
   res.render('host');
 });
@@ -29,11 +30,6 @@ app.get('/host', (req, res) => {
 app.get('/join', (req, res) => {
   res.render('join');
 });
-
-io.on('connection', (socket) => {
-  // console.log(socket.id)
-  io.emit('display message', 'a user connected');
-  console.log('a user connected');
 
 // User connected
 io.on('connection', (socket) => {
@@ -59,25 +55,3 @@ io.on('connection', (socket) => {
 server.listen(3000, () => {
   console.log('listening on *:3000');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// socket.on('disconnect', () => {
-//   io.emit('display message', 'user disconnected');
-//   console.log('user disconnected')
-// });
-// io.emit('display message', 'a user connected');
-// console.log('a user connected');
