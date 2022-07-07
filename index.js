@@ -21,11 +21,6 @@ rooms = {
   // roomId: hostId
 }
 
-
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
 io.engine.generateId = (req) => {
   return uuid.v4(); // must be unique across all Socket.IO servers
 }
@@ -35,6 +30,11 @@ function createUser(id, username, roomId){
 
   return user;
 }
+
+///////  MAIN ROUTES  /////////
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
 app.get('/host', (req, res) => {
   const roomId = uuid.v4().slice(-4);
@@ -53,18 +53,23 @@ app.get('/join', (req, res) => {
   res.render('join');
 });
 
-app.get('/join', (req, res) => {
-  roomId = req.body.roomId;
+app.post('/join', (req, res) => {
+  const roomId = req.body.roomId;
 
   res.redirect(`/room/${roomId}`)
 });
 
 app.get('/room/:roomId', (req, res) => {
   // If room does NOT have host don't render page
-  res.render('game');
-  console.log('in game room')
+  const roomId = req.params.roomId
+  if (rooms[roomId]){
+    res.render('game', { roomId });
+  } else {
+    res.send(`room ${roomId} does not exist`)
+  }
 });
 
+///////  SOCKET ROUTES  ///////
 io.on('connection', (socket) => {
   socket.on('create-room', (roomId) => {
     const currentId = socket.id
@@ -72,7 +77,7 @@ io.on('connection', (socket) => {
 
     // If room does not exist create room
     if (!rooms[roomId]){
-      // set hostId as
+      // set host to owner of room
       rooms[roomId] = currentId
 
       user = createUser(currentId, username, roomId)
@@ -81,15 +86,16 @@ io.on('connection', (socket) => {
       socket.join(roomId)
       console.log(`${currentId} created room: ${roomId}`)
 
-      console.log('users', users);
-      console.log('rooms', rooms)
     } else {
       console.log('Error: room with this ID already exists')
     }
   });
 
-  socket.on("join-room", ({ username, roomId }) => {
-    if (rooms[roomId]){
+  socket.on("join-room", (data) => {
+    const roomId   = data['roomId'];
+    const username = data['username'];
+
+    if (roomId in rooms){
       const currentId = socket.id
 
       user = createUser(currentId, username, roomId)
@@ -97,14 +103,12 @@ io.on('connection', (socket) => {
       users.push(user);
       socket.join(roomId)
 
-      console.log(`${currentId} joined room: ${roomId}`)
+      console.log(`${username} joined room: ${roomId}`)
 
     } else {
-      console.log()
+      console.log('room does not exist | socket side')
     }
   });
-
-  // socket.join(roomId);
 });
 
 
