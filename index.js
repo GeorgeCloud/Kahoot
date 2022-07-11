@@ -15,10 +15,9 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main', handlebars: allo
 app.set('view engine', 'handlebars');
 app.set("views", "./views");
 
-questions = {
-  'question': [],
-  'question': []
-}
+questions = [
+  {question: 'What color is the sky', answer: 'blue', answers: ['red', 'blue']}
+]
 
 users = []
 
@@ -141,7 +140,6 @@ io.on('connection', (socket) => {
   });
 
 });
-
 
 server.listen(3000, () => {
   console.log('listening on *:3000');

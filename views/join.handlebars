@@ -14,12 +14,13 @@
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io();
   var form = document.getElementById('roomForm');
   var roomId = document.getElementById('roomId');
   var username = document.getElementById('username');
 
   form.addEventListener('submit', function(e) {
-    socket.emit('join-room',  { roomId: roomId.value, username: username.value });
+    const message = socket.emit('join-room',  { roomId: roomId.value, username: username.value });
+    console.log(message)
   });
+
 </script>
