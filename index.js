@@ -19,9 +19,12 @@ questions = [
   {question: 'What color is the sky', answer: 'blue', answers: ['red', 'blue']}
 ]
 
-users = []
+users = [
+  // (currentId, username, roomId)
+]
 
 rooms = {
+  // 'H3hf': 2309423,
   // roomId: hostId
 }
 
@@ -45,12 +48,6 @@ app.get('/host', (req, res) => {
 
   res.render('host', { roomId });
 });
-
-// app.post('/host', (req, res) => {
-//   const roomId = req.body.roomId;
-//
-//   res.redirect(`/room/${roomId}/admin`);
-// });
 
 app.get('/join', (req, res) => {
   res.render('join');
@@ -121,6 +118,8 @@ io.on('connection', (socket) => {
 
       users.push(user);
       socket.join(roomId)
+
+      // TODO: Implement sesssions after joining room
 
       console.log(`${username} joined room: ${roomId}`)
 

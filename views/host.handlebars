@@ -27,7 +27,6 @@
 
   form.addEventListener('submit', function(e) {
     // e.preventDefault();
-
     socket.emit('create-room', roomId.value);
   });
 </script>

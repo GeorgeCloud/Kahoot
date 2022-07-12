@@ -21,6 +21,7 @@
   form.addEventListener('submit', function(e) {
     const message = socket.emit('join-room',  { roomId: roomId.value, username: username.value });
     console.log(message)
+    // TODO: Implement sessions here or backend
   });
 
 </script>
