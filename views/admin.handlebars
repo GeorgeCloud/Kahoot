@@ -1,14 +1,10 @@
 <!-- Only host of room will be able to see this view -->
-
 <!-- Style all of these elements -->
-
 <!-- Create this array of active people by making call on the client side -->
 <!-- Some type of chart -->
 <p>users = [
 ]</p>
-
 <button id="startRoomButton" type="button" class="btn btn-primary my-3">Start Game</button>
-
 <!-- TODO: Show question after button click; prevent page reload; -->
 <div class="" style="display: none;">
   <h3>Question: What color is the sky</h3>
@@ -18,15 +14,14 @@
   </ul>
 </div>
 <script>
+  const socket = io();
   // var form = document.getElementById('roomForm');
   // var roomId = document.getElementById('roomId');
-
   // form.addEventListener('submit', function(e) {
   //   // e.preventDefault();
   //
   //   socket.emit('create-room', roomId.value);
   // });
-
   // console.log()
   // Update current list of players
 </script>
