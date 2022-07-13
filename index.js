@@ -138,6 +138,18 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg);
   });
 
+  socket.on("connect user", (username) => {
+    console.log('looking for user');
+
+    // TODO: Refactor array to use username as key
+    for (let i=0; i < users.length; i++){
+      console.log(users[i]);
+      if (users[i]['username'] == username){
+        io.emit('connect user', users[i]['userId']);
+      }
+    }
+  });
+
 });
 
 server.listen(3000, () => {
