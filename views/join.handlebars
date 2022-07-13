@@ -1,6 +1,5 @@
 <h1 class="m-1">Kahoot!</h1>
 
-
 <div class="d-flex justify-content-center align-items-center">
   <form id="roomForm" class="w-50" action="/join" method="post">
     <label class="form-label">Room ID</label>
@@ -14,14 +13,19 @@
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var form = document.getElementById('roomForm');
-  var roomId = document.getElementById('roomId');
-  var username = document.getElementById('username');
+  const socket = io();
+  const form = document.getElementById('roomForm');
+  const roomId = document.getElementById('roomId');
+  const username = document.getElementById('username');
+
+  socket.on('connect', () => {
+    console.log('socket_id:', socket.id);
+ });
 
   form.addEventListener('submit', function(e) {
     const message = socket.emit('join-room',  { roomId: roomId.value, username: username.value });
     console.log(message)
     // TODO: Implement sessions here or backend
+    sessionStorage.setItem("username", username.value);
   });
-
 </script>
