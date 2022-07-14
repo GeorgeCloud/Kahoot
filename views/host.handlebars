@@ -1,18 +1,25 @@
-<h1 class="m-1">Kahoot!</h1>
-{{!-- Room ID --}}
-<div>
-  <p>Your Room ID is: {{ roomId }}</p>
-</div>
-{{!-- create questions & answers --}}
-<div class="d-flex justify-content-center align-items-center">
-  <form id="roomForm" class="w-50" action="/room/{{roomId}}/admin" method="post">
-    <input id="roomId" type="hidden" name="roomId" value="{{roomId}}">
-    <label class="form-label">What color is the sky?</label>
-    <input class="form-control" type="text">
-    <label class="form-label">How many sides does a rectangle have?</label>
-    <input class="form-control" type="number">
-    <button id="createRoomButton" type="submit" class="btn btn-primary my-3">Create Game</button>
-  </form>
+<div class="container d-flex flex-column align-items-center justify-content-center h-100"  style="background-color: rgb(58, 38, 132);">
+  {{!-- Room ID --}}
+  <div class="d-flex align-items-start justify-content-start w-100" style="margin-left: 25px;">
+    <p class="fs-5 fw-bold text-dark bg-white px-4">Room ID : {{ roomId }}</p>
+  </div>
+  
+  <h1 class="m-3" style="color: rgb(255, 255, 255); font-size: 55px;">Kahoot!</h1>
+  {{!-- create questions & answers --}}
+  <div class="d-flex flex-column justify-content-center m-3 border bg-light" style="width: 400px; height: 370px;">
+    <form id="roomForm" class="h-75 d-flex flex-column align-items-center justify-content-center" action="/room/{{roomId}}/admin" method="post">
+      <div class="btn bg-light mx-3 mb-3 fw-bold py-3" style="color: grey; border:solid; border-width: 2px; border-color:grey; width:365px;">
+        <input id="roomId" type="hidden" name="roomId" value="{{roomId}}">
+        <label class="form-label font-monospace" style="font-size: 15px;">What color is the sky?</label>
+        <input class="form-control" type="text">
+      </div>
+      <div class="btn bg-light mx-3 mb-3 fw-bold py-3" style="color: grey; border:solid; border-width: 2px; border-color:grey; width:365px;">
+        <label class="form-label font-monospace" style="font-size: 15px;">How many sides does a rectangle have?</label>
+        <input class="form-control" type="number">
+      </div>
+      <button id="createRoomButton" type="submit" class="btn bg-dark light mx-3 mt-2 py-3 fw-bold d-flex align-items-center text-center justify-content-center" style="color: white; height: 50px; width: 365px;">Create Game</button>
+    </form>
+  </div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
