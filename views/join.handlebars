@@ -1,15 +1,19 @@
-<h1 class="m-1">Kahoot!</h1>
+<div class="container d-flex flex-column align-items-center justify-content-center h-100"  style="background-color: rgb(58, 38, 132);">
+  <h1 class="m-3 monospace" style="color: rgb(255, 255, 255); font-size: 55px;">Kahoot!</h1>
 
-<div class="d-flex justify-content-center align-items-center">
-  <form id="roomForm" class="w-50" action="/join" method="post">
-    <label class="form-label">Room ID</label>
-    <input id="roomId" class="form-control" type="text" name="roomId" placeholder="1U3X5">
-
-    <label class="form-label">Username</label>
-    <input  id="username" class="form-control" type="text" name="username" placeholder="Bob">
-
-    <button type="submit" class="btn btn-primary my-3">Join Game</button>
-  </form>
+  <div class="d-flex flex-column justify-content-center m-3 border bg-light" style="width: 400px; height: 370px;">
+    <form id="roomForm" class="h-75 d-flex flex-column align-items-center justify-content-center" action="/join" method="post">
+      <div class="btn bg-light mx-3 mb-3 fw-bold py-3" style="color: grey; border:solid; border-width: 2px; border-color:grey; width:365px;">
+        <label class="form-label">Room ID</label>
+        <input id="roomId" class="form-control" type="text" name="roomId" placeholder="1U3X5">
+      </div>
+      <div class="btn bg-light mx-3 mb-3 fw-bold py-3" style="color: grey; border:solid; border-width: 2px; border-color:grey; width:365px;">
+        <label class="form-label">Username</label>
+        <input  id="username" class="form-control" type="text" name="username" placeholder="Bob">
+      </div>
+      <button type="submit" class="btn bg-dark light mx-3 mt-2 py-3 fw-bold d-flex align-items-center text-center justify-content-center" style="color: white; height: 50px; width: 365px;">Join Game</button>
+    </form>
+  </div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
